@@ -10,12 +10,13 @@ if (
     !isset($_POST["name"]) || $_POST["name"] == "" ||
     !isset($_POST["email"]) || $_POST["email"] == "" ||
     !isset($_POST["age"]) || $_POST["age"] == "" ||
-    !isset($_POST["been"]) || $_POST["been"] == ""||
+    !isset($_POST["gender"]) || $_POST["gender"] == "" ||
+    !isset($_POST["been"]) || $_POST["been"] == "" ||
     !isset($_POST["day"]) || $_POST["day"] == "" ||
     !isset($_POST["reason"]) || $_POST["reason"] == "" ||
     !isset($_POST["play"]) || $_POST["play"] == "" ||
     !isset($_POST["con"]) || $_POST["con"] == "" ||
-    !isset($_POST["will"]) || $_POST["will"] == "" 
+    !isset($_POST["will"]) || $_POST["will"] == ""
 ) {
     exit("ParamError");
 }
@@ -24,6 +25,7 @@ if (
 $name = $_POST["name"];
 $email = $_POST["email"];
 $age = $_POST["age"];
+$gender = $_POST["gender"];
 $been = $_POST["been"];
 $day = $_POST["day"];
 $reason = $_POST["reason"];
@@ -49,14 +51,15 @@ try {
 
 // データ登録SQL作成
 // `created_at`と`updated_at`には実行時の`sysdate()`関数を用いて実行時の日時を入力する
-$sql = 'INSERT INTO survey(name, email, Q1,Q2,Q3,Q4,Q5,Q6,Q7, created_at, updated_at)  
-        VALUES(:name, :email,:age,:been,:day,:reason,:play,:con,:will, sysdate(), sysdate())';
+$sql = 'INSERT INTO survey(name, email, age,gender,been,day,reason,play,con,will, created_at, updated_at)  
+        VALUES(:name, :email,:age,:gender,:been,:day,:reason,:play,:con,:will, sysdate(), sysdate())';
 
 // SQL準備&実行
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':name', $name, PDO::PARAM_STR);
 $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 $stmt->bindValue(':age', $age, PDO::PARAM_STR);
+$stmt->bindValue(':gender', $gender, PDO::PARAM_STR);
 $stmt->bindValue(':been', $been, PDO::PARAM_STR);
 $stmt->bindValue(':day', $day, PDO::PARAM_STR);
 $stmt->bindValue(':reason', $reason, PDO::PARAM_STR);

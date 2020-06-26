@@ -15,7 +15,7 @@ try {
 }
 
 // データ取得SQL作成
-$sql = 'SELECT COUNT(Q1) FROM survey WHERE  Q1=0';
+$sql = "SELECT COUNT(age) FROM survey WHERE  age='0'";
 
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
@@ -28,83 +28,81 @@ if ($status == false) {
     // var_dump($result);
     // exit();
     $Q1_0 = "";
-    // $output = "";
-    // $day .= "{$record["date"]}','";
+    // // $output = "";
+    // // $day .= "{$record["date"]}','";
     foreach ($result as $record) {
-        $Q1_0 .= "{$record[0]}";
+        $Q1_0 .= "{$record['COUNT(age)']}";
         // if($Q1_0==0){
-        //     var_dump($Q1_0);
-        //     exit();
+            var_dump($Q1_0);
+            exit();
+        // // }
+        // $output .= "<tr>";
+        // $output .= "<td>{$record["deadline"]}</td>";
+        // $output .= "<td>{$record["todo"]}</td>";
+        // $output .= "</tr>";
         // }
-        // $output .= "<tr>";
-        // $output .= "<td>{$record["deadline"]}</td>";
-        // $output .= "<td>{$record["todo"]}</td>";
-        // $output .= "</tr>";
+    }
+
+    $sql2 = "SELECT COUNT(age) FROM survey WHERE  age='1'";
+
+    $stmt = $pdo->prepare($sql2);
+    $status2 = $stmt->execute();
+
+    if ($status2 == false) {
+        $error = $stmt->errorInfo();
+        exit("sqlError:" . $error[2]);
+    } else {
+        $result2 = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
+        $Q1_1 = "";
+        // // foreach ($result as $record) {
+        $Q1_1 .= "{$record['COUNT(age)']}";
     }
 }
 
-$sql2 = 'SELECT COUNT(Q1) FROM survey WHERE  Q1=1';
-
-$stmt = $pdo->prepare($sql2);
-$status = $stmt->execute();
-
-if ($status == false) {
-    $error = $stmt->errorInfo();
-    exit("sqlError:" . $error[2]);
-} else {
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
-    $Q1_1 = "";
-    // $output = "";
-    foreach ($result as $record) {
-        $Q1_1 .= "<li>{$record["Q1_1"]}</li>";
-        // $output .= "<tr>";
-        // $output .= "<td>{$record["deadline"]}</td>";
-        // $output .= "<td>{$record["todo"]}</td>";
-        // $output .= "</tr>";
-    }
-}
-
-$sql3 = 'SELECT COUNT(Q1) FROM survey WHERE  Q1=2';
+$sql3 = "SELECT COUNT(age) FROM survey WHERE  age='2'";
 
 $stmt = $pdo->prepare($sql3);
-$status = $stmt->execute();
+$status3 = $stmt->execute();
 
-if ($status == false) {
+if ($status3 == false) {
     $error = $stmt->errorInfo();
     exit("sqlError:" . $error[2]);
 } else {
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
+    $result3 = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
     $Q1_2 = "";
-    // $output = "";
+    //     // $output = "";
     foreach ($result as $record) {
-        $Q1_2 .= "<li>{$record["Q1_2"]}</li>";
-        // $output .= "<tr>";
-        // $output .= "<td>{$record["deadline"]}</td>";
-        // $output .= "<td>{$record["todo"]}</td>";
-        // $output .= "</tr>";
+        $Q1_2 .= "{$record['COUNT(age)']}";
+        //         // $output .= "<tr>";
+        //         // $output .= "<td>{$record["deadline"]}</td>";
+        //         // $output .= "<td>{$record["todo"]}</td>";
+        //         // $output .= "</tr>";
     }
 }
 
-$sql3 = 'SELECT COUNT(Q1) FROM survey WHERE  Q1=3';
+$sql4 = "SELECT COUNT(age) FROM survey WHERE  age='3'";
 
-$stmt = $pdo->prepare($sql3);
-$status = $stmt->execute();
+$stmt = $pdo->prepare($sql4);
+$status4 = $stmt->execute();
 
-if ($status == false) {
+if ($status4 == false) {
     $error = $stmt->errorInfo();
     exit("sqlError:" . $error[2]);
 } else {
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
+    $result4 = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
     $Q1_3 = "";
-    // $output = "";
+    // // $output = "";
     foreach ($result as $record) {
-        $Q1_3 .= "<li>{$record["Q1_3"]}</li>";
-        // $output .= "<tr>";
-        // $output .= "<td>{$record["deadline"]}</td>";
-        // $output .= "<td>{$record["todo"]}</td>";
-        // $output .= "</tr>";
+        $Q1_3 .= "{$record['COUNT(age)']}";
+        //     // $output .= "<tr>";
+        //     // $output .= "<td>{$record["deadline"]}</td>";
+        //     // $output .= "<td>{$record["todo"]}</td>";
+        //     // $output .= "</tr>";
+        
     }
 }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -125,10 +123,10 @@ if ($status == false) {
 
             var data = google.visualization.arrayToDataTable([
                 ['年齢', '人数'],
-                ['20歲以下', '<?= $Q1_0 ?>'],
-                ['20~30歲', '<?= $Q1_1 ?>'],
-                ['30~40歲', '<?= $Q1_2 ?>'],
-                ['40歲以上', '<?= $Q1_3 ?>'],
+                ['20歲以下', <?= $Q1_0 ?>],
+                ['20~30歲', <?= $Q1_1 ?>],
+                ['30~40歲', <?= $Q1_2 ?>],
+                ['40歲以上', <?= $Q1_3 ?>],
             ]);
 
             var options = {
@@ -138,7 +136,52 @@ if ($status == false) {
             var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
 
             chart.draw(data, options);
-        }
+        };
+
+        // google.charts.load('current', {
+        //     'packages': ['bar']
+        // });
+        // google.charts.setOnLoadCallback(drawStuff);
+
+        // function drawStuff() {
+        //     var data = new google.visualization.arrayToDataTable([
+        //         ['理由', '人數'],
+        //         ["當地食物", 44],
+        //         ["觀光景點", 31],
+        //         ["風土民情", 12],
+        //         ['活動', 10],
+        //         ['出差', 13],
+        //         ['飛機只有停靠福岡', 1],
+        //         ['其他', 1]
+        //     ]);
+
+        //     var options = {
+        //         title: '選擇在福岡旅遊的最主要原因',
+        //         width: 900,
+        //         legend: {
+        //             position: 'none'
+        //         },
+        //         chart: {
+        //             title: '選擇在福岡旅遊的最主要原因',
+
+        //         },
+        //         bars: 'horizontal', // Required for Material Bar Charts.
+        //         axes: {
+        //             x: {
+        //                 0: {
+        //                     side: 'top',
+        //                     label: '人數'
+        //                 } // Top x-axis.
+        //             }
+        //         },
+        //         bar: {
+        //             groupWidth: "90%"
+        //         }
+        //     };
+
+        //     var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        //     chart.draw(data, options);
+        // };
     </script>
 
 
@@ -146,23 +189,13 @@ if ($status == false) {
 
 <body>
 
-    <legend>DB連携型todoリスト（一覧画面）</legend>
+    <legend></legend>
     <a href="survey.input.php">入力画面</a>
 
-    <tr>
-        <th>deadline</th>
-        <th>todo</th>
-    </tr>
-    <ul>
-        <!-- ここに<tr><td>deadline</td><td>todo</td><tr>の形でデータが入る -->
-        <?= $Q1_0 ?>
-        <?= $Q1_1 ?>
-        <?= $Q1_2 ?>
-        <?= $Q1_3 ?>
-    </ul>
 
-
+    
     <div id="piechart1" style="width: 900px; height: 500px;"></div>
+    <!-- <div id="top_x_div" style="width: 900px; height: 500px;"></div> -->
 </body>
 
 </html>
